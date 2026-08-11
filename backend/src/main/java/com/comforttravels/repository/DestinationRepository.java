@@ -1,0 +1,11 @@
+package com.comforttravels.repository;
+
+import com.comforttravels.entity.Destination;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
+
+public interface DestinationRepository extends JpaRepository<Destination, Long> {
+    List<Destination> findByFeaturedTrue();
+    Optional<Destination> findBySlug(String slug);
+}

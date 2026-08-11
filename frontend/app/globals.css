@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', sans-serif;
+    --font-playfair: 'Playfair Display', serif;
+    --color-bg: #ffffff;
+    --color-text: #0f172a;
+    --color-primary: #0ea5e9;
+    --color-accent: #f97316;
+  }
+  .dark {
+    --color-bg: #0f172a;
+    --color-text: #f8fafc;
+    --color-primary: #38bdf8;
+    --color-accent: #fb923c;
+  }
+  body { @apply bg-[var(--color-bg)] text-[var(--color-text)] antialiased; }
+  h1,h2,h3,h4 { @apply font-heading; }
+}
