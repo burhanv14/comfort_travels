@@ -1,22 +1,193 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@config "../tailwind.config.ts";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
 
 @layer base {
   :root {
-    --font-inter: 'Inter', sans-serif;
-    --font-playfair: 'Playfair Display', serif;
-    --color-bg: #ffffff;
-    --color-text: #0f172a;
-    --color-primary: #0ea5e9;
+    --radius: 0.75rem;
+
+    /* shadcn semantic tokens — teal + orange travel brand */
+    --background: #fafafa;
+    --foreground: #0c0a09;
+    --card: #ffffff;
+    --card-foreground: #0c0a09;
+    --popover: #ffffff;
+    --popover-foreground: #0c0a09;
+    --primary: #0d9488;
+    --primary-foreground: #f0fdfa;
+    --secondary: #f5f5f4;
+    --secondary-foreground: #1c1917;
+    --muted: #f5f5f4;
+    --muted-foreground: #78716c;
+    --accent: #f97316;
+    --accent-foreground: #ffffff;
+    --destructive: #ef4444;
+    --destructive-foreground: #fef2f2;
+    --border: #e7e5e4;
+    --input: #e7e5e4;
+    --ring: #0d9488;
+
+    /* Extended design tokens (used by ui components) */
+    --color-bg: #fafafa;
+    --color-bg-elevated: #ffffff;
+    --color-bg-subtle: #f5f5f4;
+    --color-text: #0c0a09;
+    --color-text-muted: #78716c;
+    --color-text-subtle: #a8a29e;
+    --color-primary: #0d9488;
+    --color-primary-glow: #14b8a6;
+    --color-primary-hover: #0f766e;
+    --color-primary-light: #ccfbf1;
     --color-accent: #f97316;
+    --color-accent-glow: #fb923c;
+    --color-accent-hover: #ea580c;
+    --color-accent-light: #ffedd5;
+    --color-border: #e7e5e4;
+    --color-border-strong: #d6d3d1;
+    --color-error: #ef4444;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+    --shadow-glow: 0 0 20px -5px rgb(13 148 136 / 0.4);
+    --shadow-glow-accent: 0 0 20px -5px rgb(249 115 22 / 0.4);
+
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition-base: 250ms;
+    --transition-slow: 350ms;
   }
+
   .dark {
-    --color-bg: #0f172a;
-    --color-text: #f8fafc;
-    --color-primary: #38bdf8;
+    --background: #0c0a09;
+    --foreground: #fafaf9;
+    --card: #1c1917;
+    --card-foreground: #fafaf9;
+    --popover: #1c1917;
+    --popover-foreground: #fafaf9;
+    --primary: #2dd4bf;
+    --primary-foreground: #042f2e;
+    --secondary: #292524;
+    --secondary-foreground: #fafaf9;
+    --muted: #292524;
+    --muted-foreground: #a8a29e;
+    --accent: #fb923c;
+    --accent-foreground: #431407;
+    --destructive: #f87171;
+    --destructive-foreground: #450a0a;
+    --border: #292524;
+    --input: #292524;
+    --ring: #2dd4bf;
+
+    --color-bg: #0c0a09;
+    --color-bg-elevated: #1c1917;
+    --color-bg-subtle: #292524;
+    --color-text: #fafaf9;
+    --color-text-muted: #a8a29e;
+    --color-text-subtle: #78716c;
+    --color-primary: #2dd4bf;
+    --color-primary-glow: #5eead4;
+    --color-primary-hover: #14b8a6;
+    --color-primary-light: #134e4a;
     --color-accent: #fb923c;
+    --color-accent-glow: #fdba74;
+    --color-accent-hover: #f97316;
+    --color-accent-light: #431407;
+    --color-border: #292524;
+    --color-border-strong: #44403c;
+    --color-error: #f87171;
+
+    --shadow-glow: 0 0 20px -5px rgb(45 212 191 / 0.3);
+    --shadow-glow-accent: 0 0 20px -5px rgb(251 146 60 / 0.3);
   }
-  body { @apply bg-[var(--color-bg)] text-[var(--color-text)] antialiased; }
-  h1,h2,h3,h4 { @apply font-heading; }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer utilities {
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(
+      180deg,
+      rgba(12, 10, 9, 0.75) 0%,
+      rgba(12, 10, 9, 0.35) 45%,
+      rgba(12, 10, 9, 0.85) 100%
+    );
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+
+  .glass {
+    @apply bg-background/60 backdrop-blur-xl border border-border/50;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-brand-400 bg-clip-text text-transparent;
+  }
+
+  .mesh-bg {
+    background-image:
+      radial-gradient(at 20% 20%, rgb(13 148 136 / 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgb(249 115 22 / 0.06) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, rgb(13 148 136 / 0.05) 0px, transparent 50%);
+  }
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist_Mono, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { APP_NAME, APP_URL } from "@/lib/constants";
@@ -7,11 +7,16 @@ import { createTravelAgencyJsonLd } from "@/lib/seo";
 import { AppProviders } from "@/providers/app-providers";
 import { SiteLayout } from "@/components/layout/site-layout";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -54,7 +59,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      suppressHydrationWarning
+      className={cn("h-full antialiased font-sans", inter.variable, playfair.variable, geistMono.variable)}
     >
       <body className="min-h-full flex flex-col">
         <script
