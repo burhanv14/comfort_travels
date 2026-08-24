@@ -17,7 +17,7 @@ export function FeaturedPackages() {
   });
 
   return (
-    <section className="section-padding bg-muted/30">
+    <section className="section-padding">
       <div className="mx-auto max-w-7xl container-padding">
         <SectionHeader
           label="Curated For You"

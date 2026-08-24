@@ -17,13 +17,15 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
     .slice(0, 2);
 
   return (
-    <Card className="h-full border-0 shadow-md">
+    <Card className="h-full border border-border/60 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg">
       <CardContent className="flex h-full flex-col p-6">
-        <Quote className="size-8 text-primary/30" aria-hidden="true" />
+        <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+          <Quote className="size-5 text-primary" aria-hidden="true" />
+        </div>
         <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
           &ldquo;{testimonial.content}&rdquo;
         </p>
-        <div className="mt-6 flex items-center gap-1">
+        <div className="mt-5 flex items-center gap-0.5">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
@@ -31,9 +33,11 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
             />
           ))}
         </div>
-        <div className="mt-4 flex items-center gap-3 border-t pt-4">
-          <Avatar>
-            <AvatarFallback className="bg-primary/10 text-primary text-xs">{initials}</AvatarFallback>
+        <div className="mt-5 flex items-center gap-3 border-t border-border/60 pt-5">
+          <Avatar className="size-10 border-2 border-primary/20">
+            <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
+              {initials}
+            </AvatarFallback>
           </Avatar>
           <div>
             <p className="text-sm font-semibold">{testimonial.name}</p>

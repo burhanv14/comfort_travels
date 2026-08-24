@@ -18,7 +18,7 @@ export function PopularDestinations() {
   });
 
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-muted/30">
       <div className="mx-auto max-w-7xl container-padding">
         <SectionHeader
           label="Explore"
