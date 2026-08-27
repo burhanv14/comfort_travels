@@ -97,3 +97,6 @@ npm run prepare
 - Connect real backend APIs if needed
 - Verify SEO metadata and canonical app URL
 - Run `npm run lint` and `npm run typecheck`
+
+
+Happy developing.
