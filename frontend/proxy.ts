@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const protectedAdminMatcher = /^\/admin(\/.*)?$/;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (!protectedAdminMatcher.test(pathname) || pathname === "/admin/login") {
