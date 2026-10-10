@@ -24,7 +24,7 @@ export function FeaturedPackages() {
           title="Featured Packages"
           description="Our most popular tour packages, crafted for unforgettable experiences."
         />
-        {isLoading && <GridSkeleton count={6} />}
+        {isLoading && <GridSkeleton count={3} />}
         {error && <ErrorState onRetry={() => refetch()} />}
         {data && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

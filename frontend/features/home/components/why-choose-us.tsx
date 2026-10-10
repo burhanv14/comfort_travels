@@ -20,7 +20,7 @@ export function WhyChooseUs() {
         <SectionHeader
           label="Why Us"
           title="Why Choose Comfort Travels?"
-          description="We go beyond booking — we craft experiences that stay with you forever."
+          description="We go beyond booking - we craft experiences that stay with you forever."
         />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {WHY_CHOOSE_US.map((item, i) => {
@@ -56,7 +56,7 @@ export function ServicesSection() {
         <SectionHeader
           label="Our Services"
           title="Everything You Need to Travel"
-          description="Your journey, our commitment — expertly planned, seamlessly delivered."
+          description="Your journey, our commitment - expertly planned, seamlessly delivered."
         />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service) => {

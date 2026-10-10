@@ -34,11 +34,6 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
           ))}
         </div>
         <div className="mt-5 flex items-center gap-3 border-t border-border/60 pt-5">
-          <Avatar className="size-10 border-2 border-primary/20">
-            <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
           <div>
             <p className="text-sm font-semibold">{testimonial.name}</p>
             <p className="text-xs text-muted-foreground">

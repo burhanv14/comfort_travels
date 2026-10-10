@@ -14,7 +14,7 @@ import { destinationsApi } from "@/lib/api";
 export function PopularDestinations() {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["destinations", "popular"],
-    queryFn: () => destinationsApi.getAll({ popular: true, limit: 6 }),
+    queryFn: () => destinationsApi.getAll({ popular: true, limit: 3 }),
   });
 
   return (
@@ -25,7 +25,7 @@ export function PopularDestinations() {
           title="Popular Destinations"
           description="Handpicked destinations loved by thousands of travellers worldwide."
         />
-        {isLoading && <GridSkeleton count={6} type="destination" />}
+        {isLoading && <GridSkeleton count={3} type="destination" />}
         {error && <ErrorState onRetry={() => refetch()} />}
         {data && (
           <motion.div
