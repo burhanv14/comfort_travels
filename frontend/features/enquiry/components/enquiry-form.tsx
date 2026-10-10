@@ -83,16 +83,13 @@ export function EnquiryForm({ packageId, destination, type = "general" }: Enquir
           {errors.phone && <p className="text-xs text-destructive">{errors.phone.message}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="travellers">Travellers</Label>
-          <Input id="travellers" type="number" min={1} {...register("travellers")} />
+          <Label htmlFor="travellers">Travellers *</Label>
+          <Input id="travellers" type="number" min={1} required {...register("travellers")} aria-invalid={!!errors.travellers} />
+          {errors.travellers && <p className="text-xs text-destructive">{errors.travellers.message}</p>}
         </div>
         <div className="space-y-2">
           <Label htmlFor="travelDate">Travel Date</Label>
           <Input id="travelDate" type="date" {...register("travelDate")} />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="budget">Budget</Label>
-          <Input id="budget" placeholder="e.g. 50000" {...register("budget")} />
         </div>
       </div>
       <div className="space-y-2">
