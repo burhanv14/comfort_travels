@@ -7,7 +7,6 @@ export const enquirySchema = z.object({
   destination: z.string().optional(),
   travellers: z.coerce.number().min(1, "At least 1 traveller required").max(50),
   travelDate: z.string().optional(),
-  budget: z.string().optional(),
   message: z.string().min(10, "Message must be at least 10 characters"),
   type: z.enum(["general", "package", "visa", "flight", "train", "hotel"]).default("general"),
   packageId: z.string().optional(),
@@ -30,10 +29,6 @@ export const contactSchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
-export const newsletterSchema = z.object({
-  email: z.string().email("Please enter a valid email"),
-});
-
 export const loginSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -51,29 +46,41 @@ export const visaEnquirySchema = z.object({
 });
 
 export const flightBookingSchema = z.object({
-  tripType: z.enum(["round-trip", "one-way", "multi-city"]),
+  tripType: z.enum(["round-trip", "one-way"]),
   from: z.string().min(2, "Departure city required"),
   to: z.string().min(2, "Destination required"),
   departDate: z.string().min(1, "Departure date required"),
   returnDate: z.string().optional(),
-  adults: z.coerce.number().min(1),
-  children: z.coerce.number().min(0),
-  infants: z.coerce.number().min(0),
   class: z.enum(["economy", "premium-economy", "business"]),
-  name: z.string().min(2),
-  email: z.string().email(),
-  phone: z.string().min(10),
+  freeCancellation: z.boolean().optional(),
+  passengers: z.array(z.object({
+    name: z.string().min(2, "Name required"),
+    email: z.string().email("Valid email required"),
+    phone: z.string().min(10, "Valid phone required"),
+    age: z.coerce.number().min(1).max(120),
+    sex: z.enum(["M","F","O"]),
+  })).min(1).max(6),
 });
 
 export const trainBookingSchema = z.object({
   from: z.string().min(2, "Departure station required"),
   to: z.string().min(2, "Destination station required"),
   travelDate: z.string().min(1, "Travel date required"),
-  class: z.enum(["sleeper", "ac-3", "ac-2", "ac-1", "executive"]),
-  passengers: z.coerce.number().min(1).max(6),
-  name: z.string().min(2),
-  email: z.string().email(),
-  phone: z.string().min(10),
+  class: z.enum([
+    "1A", "2A", "3A", "3E", "EC", "CC", "EA", "FC", "SL", "2S", "GS"
+  ]),
+  quota: z.enum([
+    "GN","TQ","PT","LD","LB","DV","FT","PQ","RL","RS","DF","DP","RSQ","EQ","PH","HOR"
+  ]),
+  preferredTrain: z.string().optional(),
+  passengers: z.array(z.object({
+    name: z.string().min(2, "Name required"),
+    email: z.string().email("Valid email required"),
+    phone: z.string().min(10, "Valid phone required"),
+    age: z.coerce.number().min(1).max(120),
+    sex: z.enum(["M","F","O"]),
+    berthPreference: z.string().optional(),
+  })).min(1).max(6),
 });
 
 export const hotelBookingSchema = z.object({
@@ -81,11 +88,13 @@ export const hotelBookingSchema = z.object({
   checkIn: z.string().min(1, "Check-in date required"),
   checkOut: z.string().min(1, "Check-out date required"),
   rooms: z.coerce.number().min(1).max(10),
-  adults: z.coerce.number().min(1),
-  children: z.coerce.number().min(0),
-  name: z.string().min(2),
-  email: z.string().email(),
-  phone: z.string().min(10),
+  passengers: z.array(z.object({
+    name: z.string().min(2, "Name required"),
+    email: z.string().email("Valid email required"),
+    phone: z.string().min(10, "Valid phone required"),
+    age: z.coerce.number().min(1).max(120),
+    sex: z.enum(["M","F","O"]),
+  })).min(1).max(10),
 });
 
 export type EnquiryFormData = z.infer<typeof enquirySchema>;

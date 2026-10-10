@@ -6,15 +6,13 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000
 
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Packages", href: "/packages" },
   { label: "Destinations", href: "/destinations" },
-  { label: "Visa", href: "/visa-services" },
-  { label: "Flights", href: "/flight-booking" },
+  { label: "Packages", href: "/packages" },
   { label: "Trains", href: "/train-booking" },
+  { label: "Flights", href: "/flight-booking" },
+  { label: "Visa", href: "/visa-services" },
   { label: "Hotels", href: "/hotels" },
   { label: "Blogs", href: "/blogs" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const PACKAGE_CATEGORIES: { value: PackageCategory; label: string }[] = [
@@ -29,19 +27,19 @@ export const PACKAGE_CATEGORIES: { value: PackageCategory; label: string }[] = [
 export const SERVICES = [
   {
     title: "Holiday Packages",
-    description: "Tailored getaways crafted for every mood — relax, explore, and enjoy.",
+    description: "Tailored getaways crafted for every mood - relax, explore, and enjoy.",
     icon: "Palmtree",
     href: "/packages",
   },
   {
     title: "Flight Booking",
-    description: "Best fares across domestic and international routes with instant confirmation.",
+    description: "Best fares across domestic and international routes with instant confirmation & free cancellation options.",
     icon: "Plane",
     href: "/flight-booking",
   },
   {
     title: "Train Booking",
-    description: "Seamless rail reservations with flexible schedules and class options.",
+    description: "Seamless rail reservations with flexible schedules and class options including TATKAL booking.",
     icon: "Train",
     href: "/train-booking",
   },
@@ -73,7 +71,7 @@ export const WHY_CHOOSE_US = [
   },
   {
     title: "24/7 Support",
-    description: "Always available to assist you — anytime, anywhere on your journey.",
+    description: "Always available to assist you - anytime, anywhere on your journey.",
     icon: "Headphones",
   },
   {
@@ -88,7 +86,7 @@ export const WHY_CHOOSE_US = [
   },
   {
     title: "Human Connection",
-    description: "Real people who care — no bots, just genuine travel expertise.",
+    description: "Real people who care - no bots, just genuine travel expertise.",
     icon: "Users",
   },
   {

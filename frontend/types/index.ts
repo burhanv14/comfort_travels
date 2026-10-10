@@ -39,13 +39,8 @@ export interface Package {
   duration: string;
   nights: number;
   days: number;
-  price: number;
-  originalPrice?: number;
-  currency: string;
   images: string[];
   coverImage: string;
-  rating: number;
-  reviewCount: number;
   featured: boolean;
   popular: boolean;
   itinerary: ItineraryDay[];
@@ -161,11 +156,9 @@ export interface PackageFilters {
   search?: string;
   category?: PackageCategory;
   destination?: string;
-  minPrice?: number;
-  maxPrice?: number;
   page?: number;
   limit?: number;
-  sort?: "price-asc" | "price-desc" | "rating" | "popular";
+  sort?: "popular";
 }
 
 export interface SearchEnquiryForm {

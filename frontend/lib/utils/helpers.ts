@@ -45,7 +45,6 @@ export function filterPackages(packages: Package[], filters: PackageFilters): Pa
 
   if (filters.sort === "price-asc") result.sort((a, b) => a.price - b.price);
   else if (filters.sort === "price-desc") result.sort((a, b) => b.price - a.price);
-  else if (filters.sort === "rating") result.sort((a, b) => b.rating - a.rating);
   else if (filters.sort === "popular") result.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
 
   return result;
