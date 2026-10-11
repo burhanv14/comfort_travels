@@ -10,7 +10,7 @@ Production-ready travel agency website built with Next.js App Router, TypeScript
 - TanStack Query
 - React Hook Form + Zod
 - Axios
-- Framer Motion (minimal, meaningful animation)
+- Framer Motion 
 - next/image and next/font
 
 ## Features

@@ -33,11 +33,9 @@ export default function ContactRoute() {
 
           <div className="space-y-4">
             <Card>
-              <CardHeader><CardTitle className="text-sm">Office</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-xl">What happens next?</CardTitle></CardHeader>
               <CardContent className="space-y-3 text-muted-foreground">
-                <p className="inline-flex items-center gap-2"><MapPin className="size-4 text-primary" /> 123 Travel Street, Mumbai, 400001</p>
-                <p className="inline-flex items-center gap-2"><Phone className="size-4 text-primary" /> +91 98765 43210</p>
-                <p className="inline-flex items-center gap-2"><Mail className="size-4 text-primary" /> info@comforttravels.com</p>
+                <p className="inline-flex items-center gap-2">Your enquiry will be sent & reviewed by our team. We will get back to you within 24 hours. In case of any delay or last moment emergencies, we will contact you as soon as possible or inform you about the same via email or phone.</p>
               </CardContent>
             </Card>
           </div>
