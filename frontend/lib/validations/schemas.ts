@@ -4,21 +4,11 @@ export const enquirySchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(10, "Please enter a valid phone number"),
-  destination: z.string().optional(),
   travellers: z.coerce.number().min(1, "At least 1 traveller required").max(50),
   travelDate: z.string().optional(),
   message: z.string().min(10, "Message must be at least 10 characters"),
   type: z.enum(["general", "package", "visa", "flight", "train", "hotel"]).default("general"),
   packageId: z.string().optional(),
-});
-
-export const searchEnquirySchema = z.object({
-  destination: z.string().min(2, "Please enter a destination"),
-  startDate: z.string().min(1, "Start date is required"),
-  endDate: z.string().min(1, "End date is required"),
-  travellers: z.coerce.number().min(1).max(50),
-  budget: z.string().optional(),
-  tripType: z.enum(["relaxation", "adventure", "sightseeing", "mixed"]).default("mixed"),
 });
 
 export const contactSchema = z.object({
@@ -100,4 +90,3 @@ export const hotelBookingSchema = z.object({
 export type EnquiryFormData = z.infer<typeof enquirySchema>;
 export type ContactFormData = z.infer<typeof contactSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
-export type SearchEnquiryFormData = z.infer<typeof searchEnquirySchema>;

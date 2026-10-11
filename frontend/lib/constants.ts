@@ -6,7 +6,6 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000
 
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Destinations", href: "/destinations" },
   { label: "Packages", href: "/packages" },
   { label: "Trains", href: "/train-booking" },
   { label: "Flights", href: "/flight-booking" },
@@ -98,7 +97,6 @@ export const WHY_CHOOSE_US = [
 
 export const STATS = [
   { value: "15K+", label: "Happy Travellers" },
-  { value: "200+", label: "Destinations" },
   { value: "500+", label: "Tour Packages" },
   { value: "99%", label: "Satisfaction Rate" },
 ] as const;

@@ -22,17 +22,12 @@ export function filterPackages(packages: Package[], filters: PackageFilters): Pa
     result = result.filter(
       (p) =>
         p.title.toLowerCase().includes(q) ||
-        p.destination.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q)
     );
   }
 
   if (filters.category) {
     result = result.filter((p) => p.category === filters.category);
-  }
-
-  if (filters.destination) {
-    result = result.filter((p) => p.destinationId === filters.destination || p.destination.toLowerCase() === filters.destination?.toLowerCase());
   }
 
   if (filters.minPrice) {
