@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { Check, X, Star, Clock, MapPin, MessageCircle } from "lucide-react";
+import { Check, X, Star, Clock, MapPin, MessageCircle, Map, Package, Shield, HelpCircle } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Gallery } from "@/components/shared/gallery";
 import { FAQAccordion } from "@/components/shared/faq-accordion";
@@ -18,8 +18,6 @@ import { EnquiryForm } from "@/features/enquiry/components/enquiry-form";
 import { PageLoader } from "@/components/shared/loader";
 import { ErrorState } from "@/components/shared/error-state";
 import { packagesApi } from "@/lib/api";
-import { formatPrice } from "@/lib/utils/helpers";
-import type { Package } from "@/types";
 
 interface PackageDetailsProps {
   slug: string;
@@ -56,10 +54,6 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge className="capitalize">{pkg.category}</Badge>
-                <span className="flex items-center gap-1 text-sm">
-                  <Star className="size-4 fill-accent text-accent" />
-                  {pkg.rating} ({pkg.reviewCount} reviews)
-                </span>
               </div>
               <h1 className="mt-3 text-3xl font-bold">{pkg.title}</h1>
               <p className="mt-2 flex items-center gap-4 text-muted-foreground">
@@ -69,12 +63,36 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
               <p className="mt-4 text-muted-foreground leading-relaxed">{pkg.description}</p>
             </div>
 
-            <Tabs defaultValue="itinerary">
-              <TabsList>
-                <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
-                <TabsTrigger value="inclusions">Inclusions</TabsTrigger>
-                <TabsTrigger value="exclusions">Exclusions</TabsTrigger>
-                <TabsTrigger value="faq">FAQ</TabsTrigger>
+            <Tabs defaultValue="itinerary" className="mt-8 w-full flex flex-col">
+              <TabsList variant="line" className="w-full justify-start border-b border-border p-0 h-auto gap-1 sm:gap-2">
+                <TabsTrigger
+                  value="itinerary"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium border-b-2 border-transparent data-[active]:border-primary data-[active]:text-primary data-active:border-primary data-active:text-primary aria-selected:border-primary aria-selected:text-primary text-muted-foreground hover:text-foreground transition-all cursor-pointer -mb-px"
+                >
+                  <Map className="size-4 shrink-0" />
+                  <span>Itinerary</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="inclusions"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium border-b-2 border-transparent data-[active]:border-primary data-[active]:text-primary data-active:border-primary data-active:text-primary aria-selected:border-primary aria-selected:text-primary text-muted-foreground hover:text-foreground transition-all cursor-pointer -mb-px"
+                >
+                  <Package className="size-4 shrink-0" />
+                  <span>Inclusions</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="exclusions"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium border-b-2 border-transparent data-[active]:border-primary data-[active]:text-primary data-active:border-primary data-active:text-primary aria-selected:border-primary aria-selected:text-primary text-muted-foreground hover:text-foreground transition-all cursor-pointer -mb-px"
+                >
+                  <Shield className="size-4 shrink-0" />
+                  <span>Exclusions</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="faq"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium border-b-2 border-transparent data-[active]:border-primary data-[active]:text-primary data-active:border-primary data-active:text-primary aria-selected:border-primary aria-selected:text-primary text-muted-foreground hover:text-foreground transition-all cursor-pointer -mb-px"
+                >
+                  <HelpCircle className="size-4 shrink-0" />
+                  <span>FAQ</span>
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="itinerary" className="mt-6">
                 <PackageTimeline itinerary={pkg.itinerary} />
@@ -82,7 +100,7 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
               <TabsContent value="inclusions" className="mt-6">
                 <ul className="space-y-2">
                   {pkg.inclusions.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm">
+                    <li key={item} className="flex items-start gap-2 text-">
                       <Check className="mt-0.5 size-4 text-primary shrink-0" />{item}
                     </li>
                   ))}
@@ -106,13 +124,6 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
           <div className="lg:sticky lg:top-24 lg:self-start">
             <Card className="shadow-lg">
               <CardContent className="p-6">
-                <div className="text-center">
-                  {pkg.originalPrice && (
-                    <p className="text-sm text-muted-foreground line-through">{formatPrice(pkg.originalPrice)}</p>
-                  )}
-                  <p className="text-3xl font-bold text-primary">{formatPrice(pkg.price)}</p>
-                  <p className="text-sm text-muted-foreground">per person</p>
-                </div>
                 <Separator className="my-6" />
                 <ul className="space-y-2 text-sm">
                   {pkg.highlights.map((h) => (

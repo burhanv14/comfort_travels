@@ -26,18 +26,16 @@ export function PackagesPage() {
   const [category, setCategory] = useState<PackageCategory | "all">(
     (searchParams.get("category") as PackageCategory) ?? "all"
   );
-  const [sort, setSort] = useState<string>("popular");
   const [view, setView] = useState<"grid" | "list">("grid");
   const [page, setPage] = useState(1);
   const debouncedSearch = useDebounce(search);
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["packages", debouncedSearch, category, sort, page],
+    queryKey: ["packages", debouncedSearch, category, page],
     queryFn: () =>
       packagesApi.getAll({
         search: debouncedSearch || undefined,
         category: category !== "all" ? category : undefined,
-        sort: sort as "price-asc" | "price-desc" | "rating" | "popular",
         page,
       }),
   });
@@ -64,7 +62,7 @@ export function PackagesPage() {
               aria-label="Search packages"
             />
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+<div className="flex flex-wrap items-center gap-3">
             <Select value={category} onValueChange={(v) => { setCategory(v as PackageCategory | "all"); setPage(1); }}>
               <SelectTrigger className="w-36"><SelectValue placeholder="Category" /></SelectTrigger>
               <SelectContent>
@@ -72,15 +70,6 @@ export function PackagesPage() {
                 {PACKAGE_CATEGORIES.map((c) => (
                   <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
                 ))}
-              </SelectContent>
-            </Select>
-            <Select value={sort} onValueChange={(v) => { setSort((v as string) ?? "popular"); setPage(1); }}>
-              <SelectTrigger className="w-36"><SelectValue placeholder="Sort" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="popular">Most Popular</SelectItem>
-                <SelectItem value="rating">Highest Rated</SelectItem>
-                <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                <SelectItem value="price-desc">Price: High to Low</SelectItem>
               </SelectContent>
             </Select>
             <div className="flex rounded-md border">

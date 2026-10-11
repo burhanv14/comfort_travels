@@ -1,4 +1,8 @@
-import { Check } from "lucide-react";
+"use client";
+
+import { useState, useEffect } from "react";
+import { Check, Sun, Moon } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { ItineraryDay } from "@/types";
 
 interface PackageTimelineProps {
@@ -17,7 +21,7 @@ export function PackageTimeline({ itinerary }: PackageTimelineProps) {
             {day.day}
           </div>
           <div className="flex-1 pb-2">
-            <h4 className="font-semibold">{day.title}</h4>
+            <h2 className="font-semibold text-xl">{day.title}</h2>
             <p className="mt-1 text-sm text-muted-foreground">{day.description}</p>
             <ul className="mt-3 space-y-1.5">
               {day.activities.map((activity) => (
