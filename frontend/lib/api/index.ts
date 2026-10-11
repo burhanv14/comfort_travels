@@ -53,19 +53,7 @@ export const destinationsApi = {
     apiClient.delete<ApiResponse<null>>(`/destinations/${slug}`).then((r) => r.data),
 };
 
-export const testimonialsApi = {
-  getAll: (params?: { featured?: boolean }) =>
-    apiClient.get<ApiResponse<Testimonial[]>>("/testimonials", { params }).then((r) => r.data.data),
 
-  create: (data: Partial<Testimonial>) =>
-    apiClient.post<ApiResponse<Testimonial>>("/testimonials", data).then((r) => r.data.data),
-
-  update: (id: string, data: Partial<Testimonial>) =>
-    apiClient.put<ApiResponse<Testimonial>>(`/testimonials/${id}`, data).then((r) => r.data.data),
-
-  delete: (id: string) =>
-    apiClient.delete<ApiResponse<null>>(`/testimonials/${id}`).then((r) => r.data),
-};
 
 export const blogsApi = {
   getAll: (params?: { featured?: boolean; page?: number; limit?: number }) =>
@@ -85,19 +73,20 @@ export const blogsApi = {
 };
 
 export const enquiryApi = {
-  submit: (data: Omit<Enquiry, "id" | "status" | "createdAt">) =>
-    apiClient.post<ApiResponse<Enquiry>>("/enquiry", data).then((r) => r.data),
-
-  getAll: () =>
-    apiClient.get<ApiResponse<Enquiry[]>>("/enquiry").then((r) => r.data.data),
-
-  updateStatus: (id: string, status: Enquiry["status"]) =>
-    apiClient.patch<ApiResponse<Enquiry>>(`/enquiry/${id}`, { status }).then((r) => r.data.data),
+  submit: (data: Partial<Enquiry>) =>
+    apiClient.post<ApiResponse<Enquiry>>("/enquiries", data).then((r) => r.data),
 };
 
 export const contactApi = {
   submit: (data: Omit<ContactSubmission, "id" | "createdAt">) =>
-    apiClient.post<ApiResponse<ContactSubmission>>("/contact", data).then((r) => r.data),
+    enquiryApi.submit({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      subject: data.subject,
+      message: data.message,
+      type: "contact",
+    }),
 };
 
 export const authApi = {
