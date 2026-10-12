@@ -159,6 +159,14 @@
     @apply py-16 md:py-24;
   }
 
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   .hero-gradient {
     background: linear-gradient(
       180deg,
@@ -189,5 +197,27 @@
       radial-gradient(at 20% 20%, rgb(13 148 136 / 0.08) 0px, transparent 50%),
       radial-gradient(at 80% 0%, rgb(249 115 22 / 0.06) 0px, transparent 50%),
       radial-gradient(at 80% 80%, rgb(13 148 136 / 0.05) 0px, transparent 50%);
+  }
+}
+
+@layer utilities {
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-up-delay {
+    animation: fade-in-up 0.6s ease-out 0.2s forwards;
+    opacity: 0;
   }
 }

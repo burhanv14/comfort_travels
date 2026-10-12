@@ -26,16 +26,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: `${APP_NAME} - Premium Travel Agency`,
-    template: `%s | ${APP_NAME}`,
+    default: `${APP_NAME}`,
+    template: `%s`,
   },
   description:
-    "Premium travel agency for curated tour packages, destinations, visa services, flight booking, train booking, and hotels.",
+    "Travel agency for curated tour packages, visa services, flight booking, train booking, and hotels & much more.",
   metadataBase: new URL(APP_URL),
   openGraph: {
-    title: `${APP_NAME} - Premium Travel Agency`,
+    title: `${APP_NAME}`,
     description:
-      "Premium travel agency for curated tour packages, destinations, visa services, flight booking, train booking, and hotels.",
+      "Travel agency for curated tour packages, visa services, flight booking, train booking, and hotels & much more.",
     url: APP_URL,
     siteName: APP_NAME,
     locale: "en_IN",
@@ -43,9 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${APP_NAME} - Premium Travel Agency`,
+    title: `${APP_NAME}`,
     description:
-      "Premium travel agency for curated tour packages, destinations, visa services, flight booking, train booking, and hotels.",
+      "Travel agency for curated tour packages, visa services, flight booking, train booking, and hotels & much more.",
   },
 };
 
