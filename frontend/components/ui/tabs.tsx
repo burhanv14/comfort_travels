@@ -30,7 +30,7 @@ const tabsListVariants = cva(
     variants: {
       variant: {
         default: "w-fit justify-center rounded-xl bg-muted p-1 h-auto",
-        line: "w-full justify-start rounded-none border-b border-border bg-transparent p-0 h-auto gap-1 sm:gap-2",
+        line: "w-full justify-start rounded-none border-b border-border bg-transparent p-0 h-auto gap-1 sm:gap-2 overflow-x-auto scrollbar-hide",
       },
     },
     defaultVariants: {
@@ -41,7 +41,7 @@ const tabsListVariants = cva(
 
 function TabsList({
   className,
-  variant = "default",
+  variant = "line",
   ...props
 }: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
   return (
