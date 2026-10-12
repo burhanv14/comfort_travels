@@ -30,17 +30,13 @@ export function filterPackages(packages: Package[], filters: PackageFilters): Pa
     result = result.filter((p) => p.category === filters.category);
   }
 
-  if (filters.minPrice) {
-    result = result.filter((p) => p.price >= filters.minPrice!);
+  if (filters.active !== undefined) {
+    result = result.filter((p) => p.active === filters.active);
   }
 
-  if (filters.maxPrice) {
-    result = result.filter((p) => p.price <= filters.maxPrice!);
+  if (filters.showOnHomepage !== undefined) {
+    result = result.filter((p) => p.showOnHomepage === filters.showOnHomepage);
   }
-
-  if (filters.sort === "price-asc") result.sort((a, b) => a.price - b.price);
-  else if (filters.sort === "price-desc") result.sort((a, b) => b.price - a.price);
-  else if (filters.sort === "popular") result.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
 
   return result;
 }

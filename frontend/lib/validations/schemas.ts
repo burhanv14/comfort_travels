@@ -9,6 +9,7 @@ export const enquirySchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters"),
   type: z.enum(["general", "package", "visa", "flight", "train", "hotel"]).default("general"),
   packageId: z.string().optional(),
+  packageName: z.string().optional(),
 });
 
 export const contactSchema = z.object({
@@ -87,6 +88,25 @@ export const hotelBookingSchema = z.object({
   })).min(1).max(10),
 });
 
+export const busBookingSchema = z.object({
+  from: z.string().min(2, "Departure city required"),
+  to: z.string().min(2, "Destination city required"),
+  travelDate: z.string().min(1, "Travel date required"),
+  busType: z.enum([
+    "AC_SEATER", "AC_SLEEPER", "NON_AC_SEATER", "NON_AC_SLEEPER", "VOLVO", "MERCEDES", "SCANIA", "ORDINARY"
+  ]),
+  preferredBus: z.string().optional(),
+  passengers: z.array(z.object({
+    name: z.string().min(2, "Name required"),
+    email: z.string().email("Valid email required"),
+    phone: z.string().min(10, "Valid phone required"),
+    age: z.coerce.number().min(1).max(120),
+    sex: z.enum(["M","F","O"]),
+    berthPreference: z.string().optional(),
+  })).min(1).max(6),
+});
+
 export type EnquiryFormData = z.infer<typeof enquirySchema>;
 export type ContactFormData = z.infer<typeof contactSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
+export type BusBookingFormData = z.infer<typeof busBookingSchema>;
