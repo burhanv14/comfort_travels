@@ -1,11 +1,11 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 spring:
   datasource:
-    url: jdbc:postgresql://pg-241ac446-comfort-travels.j.aivencloud.com:17209/defaultdb?ssl=require&user=avnadmin&password=AVNS_RiAkq94RmS6IKTe7C12
-    username: avnadmin
-    password: AVNS_RiAkq94RmS6IKTe7C12
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -19,8 +19,8 @@ spring:
   mail:
     host: ${SPRING_MAIL_HOST:smtp.gmail.com}
     port: ${SPRING_MAIL_PORT:587}
-    username: ${SPRING_MAIL_USERNAME:comforttravels52@gmail.com}
-    password: ${SPRING_MAIL_PASSWORD:yewx ntvl gkrr fxyu}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -35,6 +35,6 @@ logging:
 
 app:
   mail:
-    enquiry-recipient: ${ENQUIRY_MAIL_RECIPIENT:comforttravels52@gmail.com}
-    from: ${MAIL_FROM:noreply_comforttravels52@gmail.com}
+    enquiry-recipient: ${ENQUIRY_MAIL_RECIPIENT}
+    from: ${MAIL_FROM}
     enabled: ${MAIL_ENABLED:true}
