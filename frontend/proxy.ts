@@ -13,7 +13,7 @@ export function proxy(request: NextRequest) {
   const token = request.cookies.get("auth_token")?.value;
   if (!token) {
     const loginUrl = new URL("/admin/login", request.url);
-    loginUrl.searchParams.set("next", pathname);
+    loginUrl.searchParams.set("next", pathname === "/admin" ? "/admin/packages" : pathname);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -21,5 +21,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin", "/admin/:path*"],
 };
