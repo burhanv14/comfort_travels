@@ -3,21 +3,15 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { LayoutDashboard, Package2, MapPinned, MessageSquareQuote, Newspaper, Mail, Users, Settings, LogOut } from "lucide-react";
+import { Package2, Newspaper, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageLoader } from "@/components/shared/loader";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 
 const adminLinks = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/packages", label: "Packages", icon: Package2 },
-  { href: "/admin/destinations", label: "Destinations", icon: MapPinned },
-  { href: "/admin/testimonials", label: "Testimonials", icon: MessageSquareQuote },
   { href: "/admin/blogs", label: "Blogs", icon: Newspaper },
-  { href: "/admin/enquiries", label: "Enquiries", icon: Mail },
-  { href: "/admin/users", label: "Users", icon: Users },
-  { href: "/admin/settings", label: "Settings", icon: Settings },
 ] as const;
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
