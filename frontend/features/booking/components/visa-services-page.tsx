@@ -32,10 +32,16 @@ export function VisaServicesPage() {
     setLoading(true);
     try {
       await enquiryApi.submit({
-        ...data,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
         type: "visa",
+        countryOfResidence: data.countryOfResidence,
+        nationality: data.nationality,
+        destinationCountry: data.destinationCountry,
+        visaType: data.visaType,
+        message: data.message,
         travellers: 1,
-        message: data.message ?? `Visa enquiry for ${data.destinationCountry} - ${data.visaType}`,
       });
       toast.success("Visa enquiry submitted! We'll contact you within 24 hours.");
     } catch {
@@ -97,7 +103,7 @@ export function VisaServicesPage() {
                   <div className="space-y-2">
                     <Label>Destination Country *</Label>
                     <Select onValueChange={(v) => setValue("destinationCountry", v as string)}>
-                      <SelectTrigger><SelectValue placeholder="Select destination" /></SelectTrigger>
+                      <SelectTrigger><SelectValue placeholder="Select destination country" /></SelectTrigger>
                       <SelectContent>
                         {COUNTRIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                       </SelectContent>
