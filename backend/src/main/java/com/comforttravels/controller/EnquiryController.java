@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/enquiries")
+@RequestMapping({"/api/enquiries", "/api/enquiry"})
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class EnquiryController {
     private final EnquiryService svc;
