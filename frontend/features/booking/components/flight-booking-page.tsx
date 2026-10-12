@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Loader2, Plane } from "lucide-react";
+import { Loader2, Plane, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,24 +22,40 @@ type FlightFormInput = z.input<typeof flightBookingSchema>;
 
 export function FlightBookingPage() {
   const [loading, setLoading] = useState(false);
-  const [tripType, setTripType] = useState<"round-trip" | "one-way" | "multi-city">("round-trip");
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FlightFormInput, unknown, FlightFormData>({
+  const [tripType, setTripType] = useState<"round-trip" | "one-way">("round-trip");
+  const { register, handleSubmit, control, setValue, watch, formState: { errors } } = useForm<FlightFormInput, unknown, FlightFormData>({
     resolver: zodResolver(flightBookingSchema),
-    defaultValues: { adults: 1, children: 0, infants: 0, class: "economy", tripType: "round-trip" },
+    defaultValues: {
+      tripType: "round-trip",
+      class: "economy",
+      freeCancellation: false,
+      passengers: [{ name: "", email: "", phone: "", age: 18, sex: "M" }],
+    },
   });
+
+  const { fields, append, remove } = useFieldArray({ control, name: "passengers" });
+  const passengerCount = fields.length;
 
   const onSubmit = async (data: FlightFormData) => {
     setLoading(true);
     try {
       await enquiryApi.submit({
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
+        name: data.passengers[0]?.name || "",
+        email: data.passengers[0]?.email || "",
+        phone: data.passengers[0]?.phone || "",
         type: "flight",
-        travellers: data.adults + data.children + data.infants,
-        message: `Flight: ${data.from} to ${data.to}, ${tripType}, ${data.class}, Depart: ${data.departDate}${data.returnDate ? `, Return: ${data.returnDate}` : ""}`,
+        from: data.from,
+        to: data.to,
+        tripType: data.tripType,
+        departDate: data.departDate,
+        returnDate: data.returnDate,
+        class: data.class,
+        freeCancellation: data.freeCancellation,
+        passengers: data.passengers,
+        travellers: data.passengers.length,
+        travelDate: data.departDate,
       });
-      toast.success("Flight enquiry submitted!");
+      toast.success("Flight enquiry submitted successfully! We will contact you soon.");
     } catch {
       toast.error("Failed to submit. Please try again.");
     } finally {
@@ -49,7 +65,7 @@ export function FlightBookingPage() {
 
   return (
     <div className="section-padding">
-      <div className="mx-auto max-w-3xl container-padding">
+      <div className="mx-auto max-w-4xl container-padding">
         <Breadcrumbs items={[{ label: "Flight Booking" }]} />
         <SectionHeader title="Book Your Flights" description="Fast, simple, and reliable flight bookings with best fares." align="left" className="mb-8" />
 
@@ -59,11 +75,11 @@ export function FlightBookingPage() {
               <TabsList className="mb-6">
                 <TabsTrigger value="round-trip">Round Trip</TabsTrigger>
                 <TabsTrigger value="one-way">One Way</TabsTrigger>
-                <TabsTrigger value="multi-city">Multi-City</TabsTrigger>
               </TabsList>
             </Tabs>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+              {/* Route & Dates */}
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>From *</Label>
@@ -81,22 +97,14 @@ export function FlightBookingPage() {
                 </div>
                 {tripType === "round-trip" && (
                   <div className="space-y-2">
-                    <Label>Return Date</Label>
+                    <Label>Return Date *</Label>
                     <Input type="date" {...register("returnDate")} />
                   </div>
                 )}
                 <div className="space-y-2">
-                  <Label>Adults</Label>
-                  <Input type="number" min={1} {...register("adults")} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Children (2-12)</Label>
-                  <Input type="number" min={0} {...register("children")} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Class</Label>
-                  <Select defaultValue="economy" onValueChange={(v) => setValue("class", v as FlightFormData["class"])}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
+                  <Label>Class *</Label>
+                  <Select value={watch("class") || "economy"} onValueChange={(v) => setValue("class", (v ?? "economy") as FlightFormData["class"])}>
+                    <SelectTrigger><SelectValue placeholder="Select class" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="economy">Economy</SelectItem>
                       <SelectItem value="premium-economy">Premium Economy</SelectItem>
@@ -104,27 +112,80 @@ export function FlightBookingPage() {
                     </SelectContent>
                   </Select>
                 </div>
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    <input type="checkbox" {...register("freeCancellation")} className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+                    Free cancellation (optional)
+                  </Label>
+                </div>
               </div>
+
               <hr />
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="space-y-2">
-                  <Label>Name *</Label>
-                  <Input {...register("name")} />
+
+              {/* Passengers */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium">Passenger Details</h3>
+                  {passengerCount < 6 && (
+                    <Button type="button" variant="outline" size="sm" onClick={() => append({ name: "", email: "", phone: "", age: 18, sex: "M" })} className="gap-1">
+                      <Plus className="size-4" /> Add Passenger
+                    </Button>
+                  )}
                 </div>
-                <div className="space-y-2">
-                  <Label>Email *</Label>
-                  <Input type="email" {...register("email")} />
-                </div>
-                <div className="space-y-2">
-                  <Label>Phone *</Label>
-                  <Input type="tel" {...register("phone")} />
-                </div>
+
+                {fields.map((field, index) => (
+                  <div key={field.id} className="border p-4 rounded-lg space-y-3 relative">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">Passenger {index + 1}</span>
+                      {passengerCount > 1 && (
+                        <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)} className="text-destructive">
+                          <Minus className="size-4" />
+                        </Button>
+                      )}
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div className="space-y-1">
+                        <Label>Name *</Label>
+                        <Input {...register(`passengers.${index}.name`)} />
+                        {errors.passengers?.[index]?.name && <p className="text-xs text-destructive">{errors.passengers[index].name.message}</p>}
+                      </div>
+                      <div className="space-y-1">
+                        <Label>Email *</Label>
+                        <Input type="email" {...register(`passengers.${index}.email`)} />
+                        {errors.passengers?.[index]?.email && <p className="text-xs text-destructive">{errors.passengers[index].email.message}</p>}
+                      </div>
+                      <div className="space-y-1">
+                        <Label>Phone *</Label>
+                        <Input type="tel" {...register(`passengers.${index}.phone`)} />
+                        {errors.passengers?.[index]?.phone && <p className="text-xs text-destructive">{errors.passengers[index].phone.message}</p>}
+                      </div>
+                      <div className="space-y-1">
+                        <Label>Age *</Label>
+                        <Input type="number" min={1} max={120} {...register(`passengers.${index}.age`, { valueAsNumber: true })} />
+                        {errors.passengers?.[index]?.age && <p className="text-xs text-destructive">{errors.passengers[index].age.message}</p>}
+                      </div>
+                      <div className="space-y-1">
+                        <Label>Sex *</Label>
+                        <Select value={watch(`passengers.${index}.sex`) || "M"} onValueChange={(v) => setValue(`passengers.${index}.sex`, (v ?? "M") as "M" | "F" | "O")}>
+                          <SelectTrigger><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="M">Male</SelectItem>
+                            <SelectItem value="F">Female</SelectItem>
+                            <SelectItem value="O">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
+
               <Button type="submit" disabled={loading} className="w-full gap-2" size="lg">
                 {loading ? <Loader2 className="size-4 animate-spin" /> : <><Plane className="size-4" /> Enquire Now</>}
               </Button>
             </form>
-            <p className="mt-4 text-center text-xs text-muted-foreground">Instant full refunds · 24/7 support</p>
+            <p className="mt-4 text-center text-xs text-muted-foreground">24/7 support</p>
           </CardContent>
         </Card>
       </div>
