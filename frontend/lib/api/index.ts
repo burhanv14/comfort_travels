@@ -5,7 +5,6 @@ import type {
   Blog,
   ContactSubmission,
   DashboardStats,
-  Destination,
   Enquiry,
   Package,
   PackageFilters,
@@ -23,7 +22,7 @@ export const packagesApi = {
 
   getFeatured: () =>
     apiClient
-      .get<ApiResponse<PaginatedResponse<Package>>>("/packages", { params: { featured: true, limit: 3 } })
+      .get<ApiResponse<PaginatedResponse<Package>>>("/packages", { params: { featured: true, limit: 6 } })
       .then((r) => r.data.data.data),
 
   create: (data: Partial<Package>) =>
@@ -35,25 +34,6 @@ export const packagesApi = {
   delete: (slug: string) =>
     apiClient.delete<ApiResponse<null>>(`/packages/${slug}`).then((r) => r.data),
 };
-
-export const destinationsApi = {
-  getAll: (params?: { popular?: boolean; page?: number; limit?: number }) =>
-    apiClient.get<ApiResponse<PaginatedResponse<Destination>>>("/destinations", { params }).then((r) => r.data.data),
-
-  getBySlug: (slug: string) =>
-    apiClient.get<ApiResponse<Destination>>(`/destinations/${slug}`).then((r) => r.data.data),
-
-  create: (data: Partial<Destination>) =>
-    apiClient.post<ApiResponse<Destination>>("/destinations", data).then((r) => r.data.data),
-
-  update: (slug: string, data: Partial<Destination>) =>
-    apiClient.put<ApiResponse<Destination>>(`/destinations/${slug}`, data).then((r) => r.data.data),
-
-  delete: (slug: string) =>
-    apiClient.delete<ApiResponse<null>>(`/destinations/${slug}`).then((r) => r.data),
-};
-
-
 
 export const blogsApi = {
   getAll: (params?: { featured?: boolean; page?: number; limit?: number }) =>
@@ -73,8 +53,9 @@ export const blogsApi = {
 };
 
 export const enquiryApi = {
+  // POST /api/v1/enquiries -> proxied to backend /api/enquiries
   submit: (data: Partial<Enquiry>) =>
-    apiClient.post<ApiResponse<Enquiry>>("/enquiries", data).then((r) => r.data),
+    apiClient.post<ApiResponse<null>>("/enquiries", data).then((r) => r.data),
 };
 
 export const contactApi = {

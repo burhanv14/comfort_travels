@@ -21,6 +21,10 @@ export const PACKAGE_CATEGORIES: { value: PackageCategory; label: string }[] = [
   { value: "pilgrimage", label: "Pilgrimage" },
   { value: "luxury", label: "Luxury" },
   { value: "budget", label: "Budget" },
+  { value: "wildlife", label: "Wildlife" },
+  { value: "beach", label: "Beach" },
+  { value: "hill_station", label: "Hill Station" },
+  { value: "cultural", label: "Cultural" },
 ];
 
 export const SERVICES = [
