@@ -17,11 +17,11 @@ type EnquiryFormInput = z.input<typeof enquirySchema>;
 
 interface EnquiryFormProps {
   packageId?: string;
-  destination?: string;
+  packageName?: string;
   type?: EnquiryFormData["type"];
 }
 
-export function EnquiryForm({ packageId, destination, type = "general" }: EnquiryFormProps) {
+export function EnquiryForm({ packageId, packageName, type = "general" }: EnquiryFormProps) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -32,13 +32,17 @@ export function EnquiryForm({ packageId, destination, type = "general" }: Enquir
     reset,
   } = useForm<EnquiryFormInput, unknown, EnquiryFormData>({
     resolver: zodResolver(enquirySchema),
-    defaultValues: { type, packageId, destination, travellers: 2 },
+    defaultValues: { type, packageId, packageName, travellers: 2 },
   });
 
   const onSubmit = async (data: EnquiryFormData) => {
     setLoading(true);
     try {
-      await enquiryApi.submit(data);
+      await enquiryApi.submit({
+        ...data,
+        packageId: packageId ?? data.packageId,
+        packageName: packageName ?? data.packageName,
+      });
       setSuccess(true);
       toast.success("Enquiry submitted successfully!");
       reset();
@@ -66,6 +70,9 @@ export function EnquiryForm({ packageId, destination, type = "general" }: Enquir
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      <input type="hidden" {...register("type")} />
+      {packageId && <input type="hidden" {...register("packageId")} value={packageId} />}
+      {packageName && <input type="hidden" {...register("packageName")} value={packageName} />}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Full Name *</Label>

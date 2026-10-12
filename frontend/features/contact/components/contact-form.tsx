@@ -72,7 +72,7 @@ export function ContactForm() {
         {errors.subject && <p className="text-xs text-destructive">{errors.subject.message}</p>}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="contact-message">Message *</Label>
+        <Label htmlFor="contact-message">Message (Please include all the relevant details) *</Label>
         <Textarea id="contact-message" rows={5} {...register("message")} aria-invalid={!!errors.message} />
         {errors.message && <p className="text-xs text-destructive">{errors.message.message}</p>}
       </div>
