@@ -16,11 +16,11 @@ Production-ready travel agency website built with Next.js App Router, TypeScript
 ## Features
 
 - Premium responsive UI with dark mode support
-- Home page sections: hero, search, popular destinations, featured packages, services, testimonials, stats, CTA
-- Public pages: packages, package details, destinations, destination details, visa, flight, train, hotels, about, contact, blogs
+- Home page sections: hero, search, featured packages, services, testimonials, stats, CTA
+- Public pages: packages, package details, visa, flight, train, hotels, about, contact, blogs
 - Centralized API layer under `lib/api`
 - JWT-based admin login
-- Protected admin section with dashboard, package/destination/testimonial/blog management, enquiries, users, settings
+- Protected admin section with dashboard, package/testimonial/blog management, enquiries, users, settings
 - API mock routes under `app/api/v1/*`
 - SEO: Metadata API, OpenGraph, Twitter cards, JSON-LD, sitemap, robots
 - Accessibility basics: semantic markup, keyboard-friendly controls, aria labels on key interactions
