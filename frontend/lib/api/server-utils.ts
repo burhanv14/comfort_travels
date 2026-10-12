@@ -2,9 +2,6 @@ import { apiClient } from '@/lib/api/client';
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth/jwt';
 
-export const getPopularPackages = () =>
-  apiClient.get('/packages/popular').then(r => r.data);
-
 
 export function successResponse<T>(data: T, status = 200) {
   return NextResponse.json({ success: true, data }, { status });

@@ -22,7 +22,7 @@ export const packagesApi = {
 
   getFeatured: () =>
     apiClient
-      .get<ApiResponse<PaginatedResponse<Package>>>("/packages", { params: { featured: true, limit: 6 } })
+      .get<ApiResponse<PaginatedResponse<Package>>>("/packages", { params: { showOnHomepage: true, limit: 6 } })
       .then((r) => r.data.data.data),
 
   create: (data: Partial<Package>) =>
