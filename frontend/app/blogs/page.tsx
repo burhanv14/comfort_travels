@@ -4,7 +4,7 @@ import { createMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createMetadata({
   title: "Blogs",
-  description: "Travel guides, destination stories, and practical planning tips from travel experts.",
+  description: "Travel guides, travel stories, and practical planning tips from travel experts.",
   path: "/blogs",
 });
 
