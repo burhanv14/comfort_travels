@@ -34,7 +34,7 @@ export function BlogDetails({ slug }: BlogDetailsProps) {
           <h1 className="text-3xl font-bold leading-tight md:text-4xl">{blog.title}</h1>
           <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
             <span className="inline-flex items-center gap-1"><UserRound className="size-3.5" /> {blog.author}</span>
-            <span className="inline-flex items-center gap-1"><CalendarDays className="size-3.5" /> {formatDate(blog.publishedAt)}</span>
+            <span className="inline-flex items-center gap-1"><CalendarDays className="size-3.5" /> {formatDate(blog.createdAt)}</span>
             <span className="inline-flex items-center gap-1"><Clock3 className="size-3.5" /> {blog.readTime} min read</span>
           </div>
         </header>

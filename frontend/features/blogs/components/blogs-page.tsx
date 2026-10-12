@@ -46,7 +46,7 @@ export function BlogsPage() {
         <SectionHeader
           align="left"
           title="Travel Stories & Guides"
-          description="Expert tips, destination guides, and inspiration for your next journey."
+          description="Expert tips, travel guides, and inspiration for your next journey."
           className="mb-8"
         />
 
@@ -90,7 +90,7 @@ export function BlogsPage() {
                     <div className="flex items-center gap-4 text-muted-foreground">
                       <span className="inline-flex items-center gap-1">
                         <CalendarDays className="size-3.5" />
-                        {formatDate(blog.publishedAt)}
+                        {formatDate(blog.createdAt)}
                       </span>
                       <span className="inline-flex items-center gap-1">
                         <Clock3 className="size-3.5" />
