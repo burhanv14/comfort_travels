@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PackagesPage } from "@/features/packages/components/packages-page";
 import { createMetadata } from "@/lib/seo";
+import { GridSkeleton } from "@/components/shared/skeletons";
 
 export const metadata: Metadata = createMetadata({
   title: "Packages",
@@ -9,5 +11,9 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default function PackagesRoute() {
-  return <PackagesPage />;
+  return (
+    <Suspense fallback={<GridSkeleton count={6} />}>
+      <PackagesPage />
+    </Suspense>
+  );
 }
