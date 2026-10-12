@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { Check, X, Star, Clock, MapPin, MessageCircle, Map, Package, Shield, HelpCircle } from "lucide-react";
+import { Check, X, Star, Clock, MessageCircle, Map, Package, Shield, HelpCircle, Users, Mountain, Tag, MapPin, Utensils, BedDouble } from "lucide-react";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Gallery } from "@/components/shared/gallery";
 import { FAQAccordion } from "@/components/shared/faq-accordion";
@@ -31,21 +31,15 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
     queryFn: () => packagesApi.getBySlug(slug),
   });
 
-  const { data: related } = useQuery({
-    queryKey: ["packages", "related", pkg?.destinationId],
-    queryFn: () => packagesApi.getAll({ destination: pkg!.destinationId, limit: 4 }),
-    enabled: !!pkg,
-  });
-
   if (isLoading) return <PageLoader />;
   if (error || !pkg) return <ErrorState title="Package not found" onRetry={() => refetch()} />;
 
   return (
     <div className="section-padding">
       <div className="mx-auto max-w-7xl container-padding">
-        <Breadcrumbs items={[
-          { label: "Packages", href: "/packages" },
-          { label: pkg.title },
+        <Breadcrumbs items={[ 
+          { label: "Packages", href: "/packages" }, 
+          { label: pkg.title }, 
         ]} />
 
         <div className="mt-6 grid gap-8 lg:grid-cols-3">
@@ -53,12 +47,16 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
             <Gallery images={pkg.images} alt={pkg.title} />
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <Badge className="capitalize">{pkg.category}</Badge>
+                <Badge className="capitalize">{pkg.category.replace("_", " ")}</Badge>
+                {pkg.featured && <Badge className="bg-amber-100 text-amber-800">Featured</Badge>}
+                {pkg.popular && <Badge className="bg-blue-100 text-blue-800">Popular</Badge>}
+                {!pkg.active && <Badge variant="destructive">Inactive</Badge>}
               </div>
               <h1 className="mt-3 text-3xl font-bold">{pkg.title}</h1>
-              <p className="mt-2 flex items-center gap-4 text-muted-foreground">
-                <span className="flex items-center gap-1"><MapPin className="size-4" /> {pkg.destination}</span>
+              <p className="mt-2 flex flex-wrap items-center gap-4 text-muted-foreground">
                 <span className="flex items-center gap-1"><Clock className="size-4" /> {pkg.duration}</span>
+                {pkg.destination && <span className="flex items-center gap-1"><MapPin className="size-4" /> {pkg.destination}</span>}
+                {pkg.difficulty && <span className="flex items-center gap-1"><Mountain className="size-4" /> {pkg.difficulty.charAt(0).toUpperCase() + pkg.difficulty.slice(1)}</span>}
               </p>
               <p className="mt-4 text-muted-foreground leading-relaxed">{pkg.description}</p>
             </div>
@@ -124,6 +122,116 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
           <div className="lg:sticky lg:top-24 lg:self-start">
             <Card className="shadow-lg">
               <CardContent className="p-6">
+                {pkg.basePrice && (
+                  <div className="mb-6">
+                    <p className="text-sm text-muted-foreground">Starting from</p>
+                    <div className="flex items-baseline gap-2">
+                      {pkg.discountPrice && pkg.discountPrice < pkg.basePrice ? (
+                        <>
+                          <span className="text-xl font-bold text-destructive">
+                            {pkg.currency} {pkg.discountPrice.toLocaleString()}
+                          </span>
+                          <span className="text-muted-foreground line-through">
+                            {pkg.currency} {pkg.basePrice.toLocaleString()}
+                          </span>
+                          <Badge variant="destructive" className="ml-2">
+                            Save {Math.round(((pkg.basePrice - pkg.discountPrice) / pkg.basePrice) * 100)}%
+                          </Badge>
+                        </>
+                      ) : (
+                        <span className="text-2xl font-bold text-primary">
+                          {pkg.currency} {pkg.basePrice.toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">per person</p>
+                  </div>
+                )}
+                <Separator className="my-6" />
+                <div className="space-y-4 mb-6">
+                  {pkg.destination && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <MapPin className="size-5 text-primary" />
+                      <div>
+                        <p className="text-muted-foreground">Destination</p>
+                        <p className="font-medium">{pkg.destination}</p>
+                      </div>
+                    </div>
+                  )}
+                  {pkg.startLocation && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <Tag className="size-5 text-primary" />
+                      <div>
+                        <p className="text-muted-foreground">Start Location</p>
+                        <p className="font-medium">{pkg.startLocation}</p>
+                      </div>
+                    </div>
+                  )}
+                  {pkg.endLocation && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <Tag className="size-5 text-primary" />
+                      <div>
+                        <p className="text-muted-foreground">End Location</p>
+                        <p className="font-medium">{pkg.endLocation}</p>
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-3 text-sm">
+                    <Users className="size-5 text-primary" />
+                    <div>
+                      <p className="text-muted-foreground">Group Size</p>
+                      <p className="font-medium">{pkg.minGroupSize} - {pkg.maxGroupSize} people</p>
+                    </div>
+                  </div>
+                  {pkg.difficulty && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <Mountain className="size-5 text-primary" />
+                      <div>
+                        <p className="text-muted-foreground">Difficulty</p>
+                        <p className="font-medium capitalize">{pkg.difficulty}</p>
+                      </div>
+                    </div>
+                  )}
+                  {pkg.physicalRating && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <Mountain className="size-5 text-primary" />
+                      <div>
+                        <p className="text-muted-foreground">Physical Rating</p>
+                        <p className="font-medium capitalize">{pkg.physicalRating.replace("_", " ")}</p>
+                      </div>
+                    </div>
+                  )}
+                  {pkg.accommodation && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <BedDouble className="size-5 text-primary" />
+                      <div>
+                        <p className="text-muted-foreground">Accommodation</p>
+                        <p className="font-medium">{pkg.accommodation}</p>
+                      </div>
+                    </div>
+                  )}
+                  {pkg.meals && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <Utensils className="size-5 text-primary" />
+                      <div>
+                        <p className="text-muted-foreground">Meals</p>
+                        <p className="font-medium">{pkg.meals}</p>
+                      </div>
+                    </div>
+                  )}
+                  {pkg.freeCancellation && (
+                    <div className="flex items-center gap-3 text-sm text-green-600">
+                      <Shield className="size-5" />
+                      <div>
+                        <p className="text-muted-foreground">Cancellation</p>
+                        <p className="font-medium">Free cancellation available</p>
+                        {pkg.cancellationDaysBefore && (
+                          <p className="text-xs text-muted-foreground">Up to {pkg.cancellationDaysBefore} days before departure</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <Separator className="my-6" />
                 <ul className="space-y-2 text-sm">
                   {pkg.highlights.map((h) => (
@@ -142,24 +250,13 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
                     <DialogHeader>
                       <DialogTitle>Enquire about {pkg.title}</DialogTitle>
                     </DialogHeader>
-                    <EnquiryForm packageId={pkg.id} destination={pkg.destination} type="package" />
+                    <EnquiryForm packageId={pkg.id} type="package" />
                   </DialogContent>
                 </Dialog>
               </CardContent>
             </Card>
           </div>
         </div>
-
-        {related && related.data.length > 1 && (
-          <div className="mt-16">
-            <h2 className="mb-6 text-2xl font-bold">Related Packages</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.data.filter((p) => p.slug !== slug).slice(0, 3).map((p) => (
-                <PackageCard key={p.id} pkg={p} />
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
