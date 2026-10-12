@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, Star, ArrowRight, Tag } from "lucide-react";
+import { Clock, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -43,27 +43,6 @@ export function PackageCard({ pkg, className, variant = "grid" }: PackageCardPro
                 <p className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
                   <Clock className="size-3.5" /> {pkg.duration}
                 </p>
-                {pkg.basePrice && (
-                  <div className="mt-2 flex items-center gap-2">
-                    {pkg.discountPrice && pkg.discountPrice < pkg.basePrice ? (
-                      <>
-                        <span className="text-muted-foreground line-through text-sm">
-                          {pkg.currency} {pkg.basePrice.toLocaleString()}
-                        </span>
-                        <span className="font-semibold text-destructive">
-                          {pkg.currency} {pkg.discountPrice.toLocaleString()}
-                        </span>
-                        <Badge variant="destructive" className="text-xs">
-                          Save {Math.round(((pkg.basePrice - pkg.discountPrice) / pkg.basePrice) * 100)}%
-                        </Badge>
-                      </>
-                    ) : (
-                      <span className="font-semibold text-primary">
-                        {pkg.currency} {pkg.basePrice.toLocaleString()}
-                      </span>
-                    )}
-                  </div>
-                )}
                 <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{pkg.shortDescription}</p>
               </div>
             </CardContent>
@@ -103,27 +82,6 @@ export function PackageCard({ pkg, className, variant = "grid" }: PackageCardPro
           <p className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
             <Clock className="size-3" /> {pkg.duration}
           </p>
-          {pkg.basePrice && (
-            <div className="mt-2 flex items-center gap-2">
-              {pkg.discountPrice && pkg.discountPrice < pkg.basePrice ? (
-                <>
-                  <span className="text-muted-foreground line-through text-sm">
-                    {pkg.currency} {pkg.basePrice.toLocaleString()}
-                  </span>
-                  <span className="font-semibold text-destructive">
-                    {pkg.currency} {pkg.discountPrice.toLocaleString()}
-                  </span>
-                  <Badge variant="destructive" className="text-xs">
-                    Save {Math.round(((pkg.basePrice - pkg.discountPrice) / pkg.basePrice) * 100)}%
-                  </Badge>
-                </>
-              ) : (
-                <span className="font-semibold text-primary">
-                  {pkg.currency} {pkg.basePrice.toLocaleString()}
-                </span>
-              )}
-            </div>
-          )}
         </CardContent>
       </Card>
     </Link>

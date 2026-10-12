@@ -48,8 +48,6 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge className="capitalize">{pkg.category.replace("_", " ")}</Badge>
-                {pkg.featured && <Badge className="bg-amber-100 text-amber-800">Featured</Badge>}
-                {pkg.popular && <Badge className="bg-blue-100 text-blue-800">Popular</Badge>}
                 {!pkg.active && <Badge variant="destructive">Inactive</Badge>}
               </div>
               <h1 className="mt-3 text-3xl font-bold">{pkg.title}</h1>
@@ -122,32 +120,11 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
           <div className="lg:sticky lg:top-24 lg:self-start">
             <Card className="shadow-lg">
               <CardContent className="p-6">
-                {pkg.basePrice && (
-                  <div className="mb-6">
-                    <p className="text-sm text-muted-foreground">Starting from</p>
-                    <div className="flex items-baseline gap-2">
-                      {pkg.discountPrice && pkg.discountPrice < pkg.basePrice ? (
-                        <>
-                          <span className="text-xl font-bold text-destructive">
-                            {pkg.currency} {pkg.discountPrice.toLocaleString()}
-                          </span>
-                          <span className="text-muted-foreground line-through">
-                            {pkg.currency} {pkg.basePrice.toLocaleString()}
-                          </span>
-                          <Badge variant="destructive" className="ml-2">
-                            Save {Math.round(((pkg.basePrice - pkg.discountPrice) / pkg.basePrice) * 100)}%
-                          </Badge>
-                        </>
-                      ) : (
-                        <span className="text-2xl font-bold text-primary">
-                          {pkg.currency} {pkg.basePrice.toLocaleString()}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-1">per person</p>
-                  </div>
-                )}
-                <Separator className="my-6" />
+                <div className="mb-4">
+                  <h2 className="text-xl font-bold">Package Overview</h2>
+                  <p className="text-xs text-muted-foreground mt-1">Tour details and inclusions</p>
+                </div>
+                <Separator className="mb-6" />
                 <div className="space-y-4 mb-6">
                   {pkg.destination && (
                     <div className="flex items-center gap-3 text-sm">
@@ -250,7 +227,7 @@ export function PackageDetails({ slug }: PackageDetailsProps) {
                     <DialogHeader>
                       <DialogTitle>Enquire about {pkg.title}</DialogTitle>
                     </DialogHeader>
-                    <EnquiryForm packageId={pkg.id} type="package" />
+                    <EnquiryForm packageId={String(pkg.id)} packageName={pkg.title} type="package" />
                   </DialogContent>
                 </Dialog>
               </CardContent>
