@@ -17,24 +17,11 @@ export function PackageCardSkeleton() {
   );
 }
 
-export function DestinationCardSkeleton() {
-  return (
-    <Card className="overflow-hidden">
-      <Skeleton className="aspect-[3/4] w-full rounded-none" />
-      <CardContent className="space-y-2 p-4">
-        <Skeleton className="h-5 w-2/3" />
-        <Skeleton className="h-3 w-1/3" />
-      </CardContent>
-    </Card>
-  );
-}
-
-export function GridSkeleton({ count = 6, type = "package" }: { count?: number; type?: "package" | "destination" }) {
-  const SkeletonComponent = type === "package" ? PackageCardSkeleton : DestinationCardSkeleton;
+export function GridSkeleton({ count = 6 }: { count?: number }) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: count }).map((_, i) => (
-        <SkeletonComponent key={i} />
+        <PackageCardSkeleton key={i} />
       ))}
     </div>
   );
