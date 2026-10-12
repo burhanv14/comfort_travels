@@ -50,7 +50,7 @@ export default function AboutRoute() {
           <Card>
             <CardContent className="space-y-4 p-6 text-muted-foreground">
               <p>
-                We are a full-service travel agency focused on curated holiday packages, destination planning,
+                We are a full-service travel agency focused on curated holiday packages,
                 visa support, flights, trains, and hotels. Our team combines practical travel knowledge with
                 concierge-level service to deliver stress-free experiences.
               </p>

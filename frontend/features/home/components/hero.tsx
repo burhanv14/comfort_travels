@@ -15,7 +15,7 @@ export function Hero() {
     <section className="relative flex min-h-[90vh] items-center overflow-hidden">
 <Image
         src="/hero_bg.jpg"
-        alt="Travel destination"
+        alt="Travel experiences"
         fill
         className="object-cover scale-105"
         priority
@@ -70,14 +70,6 @@ export function Hero() {
                 <Link href="/contact">
                   Enquire Now <ArrowRight className="size-4" />
                 </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-xl border-white/25 bg-white/5 text-white backdrop-blur-sm hover:bg-white/15 hover:text-white"
-              >
-                <Link href="/destinations">Browse Destinations</Link>
               </Button>
               <Button
                 asChild
