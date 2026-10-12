@@ -17,7 +17,8 @@ export function AdminLoginForm() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") || "/admin";
+  const next = searchParams.get("next");
+  const targetUrl = next && next !== "/admin" ? next : "/admin/packages";
   const { login } = useAuth();
 
   const {
@@ -27,8 +28,8 @@ export function AdminLoginForm() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "admin@comforttravels.com",
-      password: "admin123",
+      email: "EMAIL_ADDRESS",
+      password: "PASSWORD",
     },
   });
 
@@ -37,7 +38,7 @@ export function AdminLoginForm() {
     try {
       await login(values.email, values.password);
       toast.success("Welcome back!");
-      router.replace(next);
+      router.replace(targetUrl);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Login failed");
     } finally {

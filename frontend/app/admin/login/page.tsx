@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AdminLoginForm } from "@/features/admin/components/admin-login-form";
 import { createMetadata } from "@/lib/seo";
+import { Suspense } from "react";
 
 export const metadata: Metadata = createMetadata({
   title: "Admin Login",
@@ -11,7 +12,9 @@ export const metadata: Metadata = createMetadata({
 export default function AdminLoginRoute() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
-      <AdminLoginForm />
+      <Suspense fallback={<div className="text-center text-muted-foreground">Loading…</div>}>
+        <AdminLoginForm />
+      </Suspense>
     </div>
   );
 }
