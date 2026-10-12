@@ -12,7 +12,7 @@ import { packagesApi } from "@/lib/api";
 
 export function FeaturedPackages() {
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["packages", "featured"],
+    queryKey: ["packages", "homepage"],
     queryFn: () => packagesApi.getFeatured(),
   });
 
@@ -22,7 +22,7 @@ export function FeaturedPackages() {
         <SectionHeader
           label="Curated For You"
           title="Featured Packages"
-          description="Our most popular tour packages, crafted for unforgettable experiences."
+          description="Handpicked tour packages, crafted for unforgettable experiences."
         />
         {isLoading && <GridSkeleton count={3} />}
         {error && <ErrorState onRetry={() => refetch()} />}

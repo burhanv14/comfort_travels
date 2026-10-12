@@ -36,6 +36,7 @@ export function PackagesPage() {
       packagesApi.getAll({
         search: debouncedSearch || undefined,
         category: category !== "all" ? category : undefined,
+        active: true,
         page,
       }),
   });
