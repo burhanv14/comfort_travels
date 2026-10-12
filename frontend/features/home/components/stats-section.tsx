@@ -12,7 +12,7 @@ export function StatsSection() {
         aria-hidden="true"
       />
       <div className="relative mx-auto max-w-7xl container-padding">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 md:gap-12">
           {STATS.map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="font-heading text-4xl font-bold tracking-tight md:text-5xl">{stat.value}</p>

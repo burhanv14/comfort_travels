@@ -1,6 +1,6 @@
 import {
   Map, Headphones, Heart, BadgePercent, Users, ShieldCheck,
-  Palmtree, Plane, Train, Building2, FileCheck, Landmark,
+  Palmtree, Plane, Train, Building2, FileCheck, Landmark, Bus,
 } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Map, Headphones, Heart, BadgePercent, Users, ShieldCheck,
-  Palmtree, Plane, Train, Building2, FileCheck, Landmark,
+  Palmtree, Plane, Train, Building2, FileCheck, Landmark, Bus,
 };
 
 export function WhyChooseUs() {

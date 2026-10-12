@@ -1,17 +1,16 @@
 import type { MetadataRoute } from "next";
 import { APP_URL } from "@/lib/constants";
 import { packages } from "@/data/mock/packages";
-import { destinations } from "@/data/mock/destinations";
 import { blogs } from "@/data/mock/blogs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "",
     "/packages",
-    "/destinations",
     "/visa-services",
     "/flight-booking",
     "/train-booking",
+    "/bus-booking",
     "/hotels",
     "/about",
     "/contact",
@@ -32,19 +31,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const destinationEntries = destinations.map((item) => ({
-    url: `${APP_URL}/destinations/${item.slug}`,
-    lastModified: new Date(item.updatedAt),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
-
   const blogEntries = blogs.map((item) => ({
     url: `${APP_URL}/blogs/${item.slug}`,
-    lastModified: new Date(item.publishedAt),
+    lastModified: new Date(item.createdAt),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...packageEntries, ...destinationEntries, ...blogEntries];
+  return [...staticEntries, ...packageEntries, ...blogEntries];
 }
