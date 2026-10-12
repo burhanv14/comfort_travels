@@ -53,13 +53,6 @@ export interface Package {
   shortDescription: string;
   category: PackageCategory;
   duration: string;
-  nights: number;
-  days: number;
-
-  // Price fields
-  basePrice?: number;
-  discountPrice?: number;
-  currency: string;
 
   // Images
   images: string[];
@@ -71,8 +64,6 @@ export interface Package {
   metaKeywords?: string;
 
   // Status & visibility
-  featured: boolean;
-  popular: boolean;
   active: boolean;
   showOnHomepage: boolean;
 
@@ -181,11 +172,11 @@ export interface Enquiry {
   budget?: string;
   message?: string;
   subject?: string;
-  type: "general" | "contact" | "package" | "visa" | "flight" | "train" | "hotel";
+  type: "general" | "contact" | "package" | "visa" | "flight" | "train" | "hotel" | "bus";
   status: "pending" | "contacted" | "converted" | "closed";
   createdAt: string;
 
-  // Flight & Train common
+  // Flight & Train & Bus common
   from?: string;
   to?: string;
 
@@ -194,12 +185,17 @@ export interface Enquiry {
   departDate?: string;
   returnDate?: string;
   class?: string;
+  travelClass?: string;
   freeCancellation?: boolean;
 
   // Train
   trainClass?: string;
   quota?: string;
   preferredTrain?: string;
+
+  // Bus
+  busType?: string;
+  preferredBus?: string;
 
   // Hotel
   city?: string;
@@ -254,9 +250,8 @@ export interface PackageFilters {
   category?: PackageCategory;
   page?: number;
   limit?: number;
-  sort?: "popular" | "price-asc" | "price-desc";
-  minPrice?: number;
-  maxPrice?: number;
+  active?: boolean;
+  showOnHomepage?: boolean;
 }
 
 export interface SearchEnquiryForm {

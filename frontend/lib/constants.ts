@@ -9,6 +9,7 @@ export const NAV_LINKS = [
   { label: "Packages", href: "/packages" },
   { label: "Trains", href: "/train-booking" },
   { label: "Flights", href: "/flight-booking" },
+  { label: "Buses", href: "/bus-booking" },
   { label: "Visa", href: "/visa-services" },
   { label: "Hotels", href: "/hotels" },
   { label: "Blogs", href: "/blogs" },
@@ -45,6 +46,12 @@ export const SERVICES = [
     description: "Seamless rail reservations with flexible schedules and class options including TATKAL booking.",
     icon: "Train",
     href: "/train-booking",
+  },
+  {
+    title: "Bus Booking",
+    description: "Comfortable bus travel with AC/Non-AC, Sleeper/Seater options across major routes.",
+    icon: "Bus",
+    href: "/bus-booking",
   },
   {
     title: "Hotel Reservations",
