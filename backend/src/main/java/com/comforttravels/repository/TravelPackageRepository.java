@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TravelPackageRepository extends JpaRepository<TravelPackage, Long> {
-    List<TravelPackage> findByPopularTrue();
+    List<TravelPackage> findByActiveTrue();
+    List<TravelPackage> findByShowOnHomepageTrue();
+    List<TravelPackage> findByCategory(TravelPackage.Category category);
     Optional<TravelPackage> findBySlug(String slug);
 }
