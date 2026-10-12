@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/comfort_travels
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://pg-241ac446-comfort-travels.j.aivencloud.com:17209/defaultdb?ssl=require&user=avnadmin&password=AVNS_RiAkq94RmS6IKTe7C12
+    username: avnadmin
+    password: AVNS_RiAkq94RmS6IKTe7C12
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,8 +16,25 @@ spring:
         format_sql: true
   flyway:
     enabled: false
+  mail:
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    username: ${SPRING_MAIL_USERNAME:comforttravels52@gmail.com}
+    password: ${SPRING_MAIL_PASSWORD:yewx ntvl gkrr fxyu}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+app:
+  mail:
+    enquiry-recipient: ${ENQUIRY_MAIL_RECIPIENT:comforttravels52@gmail.com}
+    from: ${MAIL_FROM:noreply_comforttravels52@gmail.com}
+    enabled: ${MAIL_ENABLED:true}
