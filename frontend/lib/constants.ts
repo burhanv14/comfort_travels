@@ -4,6 +4,16 @@ export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? "Comfort Travels";
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api/v1";
 
+export const ADMIN_EMAIL =
+  process.env.NEXT_PUBLIC_ADMIN_EMAIL ??
+  "admin52@comforttravels.com";
+
+export const ADMIN_PASSWORD =
+  process.env.NEXT_PUBLIC_ADMIN_PASSWORD ??
+  "y$%KSXYc9.z]@Ir";
+
+export const ADMIN_NAME = "Admin User";
+
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Packages", href: "/packages" },

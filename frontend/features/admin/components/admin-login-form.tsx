@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,7 +19,13 @@ export function AdminLoginForm() {
   const searchParams = useSearchParams();
   const next = searchParams.get("next");
   const targetUrl = next && next !== "/admin" ? next : "/admin/packages";
-  const { login } = useAuth();
+  const { login, isAuthenticated, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.replace(targetUrl);
+    }
+  }, [authLoading, isAuthenticated, router, targetUrl]);
 
   const {
     register,
@@ -28,8 +34,8 @@ export function AdminLoginForm() {
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "EMAIL_ADDRESS",
-      password: "PASSWORD",
+      email: "",
+      password: "",
     },
   });
 
@@ -59,12 +65,22 @@ export function AdminLoginForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
           <div className="space-y-2">
             <Label htmlFor="admin-email">Email</Label>
-            <Input id="admin-email" type="email" {...register("email")} />
+            <Input
+              id="admin-email"
+              type="email"
+              placeholder="email"
+              {...register("email")}
+            />
             {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="admin-password">Password</Label>
-            <Input id="admin-password" type="password" {...register("password")} />
+            <Input
+              id="admin-password"
+              type="password"
+              placeholder="••••••••"
+              {...register("password")}
+            />
             {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
           </div>
           <Button type="submit" className="w-full" disabled={loading}>

@@ -1,4 +1,6 @@
 import { apiClient } from "./client";
+import { ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME } from "@/lib/constants";
+import { ADMIN_USER, signToken } from "@/lib/auth/jwt";
 import type {
   ApiResponse,
   AuthResponse,
@@ -71,11 +73,48 @@ export const contactApi = {
 };
 
 export const authApi = {
-  login: (email: string, password: string) =>
-    apiClient.post<ApiResponse<AuthResponse>>("/auth/login", { email, password }).then((r) => r.data.data),
+  login: async (email: string, password: string): Promise<AuthResponse> => {
+    const expectedEmail = ADMIN_EMAIL.trim().toLowerCase();
+    const expectedPassword = ADMIN_PASSWORD;
 
-  me: () =>
-    apiClient.get<ApiResponse<User>>("/auth/me").then((r) => r.data.data),
+    if (email.trim().toLowerCase() !== expectedEmail || password !== expectedPassword) {
+      throw new Error("Invalid email or password");
+    }
+
+    const user: User = {
+      ...ADMIN_USER,
+      name: ADMIN_NAME,
+      email: expectedEmail,
+      createdAt: new Date().toISOString(),
+    };
+
+    let token = "";
+    try {
+      token = await signToken(user);
+    } catch {
+      token = `admin-token-${Date.now()}`;
+    }
+
+    return { token, user };
+  },
+
+  me: async (): Promise<User> => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("auth_user");
+      if (stored) {
+        try {
+          return JSON.parse(stored);
+        } catch {
+          // ignore
+        }
+      }
+    }
+    return {
+      ...ADMIN_USER,
+      name: ADMIN_NAME,
+      email: ADMIN_EMAIL,
+    };
+  },
 };
 
 export const dashboardApi = {
