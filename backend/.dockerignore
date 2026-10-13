@@ -1,0 +1,54 @@
+# Build outputs
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+
+# Docker
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Test reports
+target/surefire-reports/
+target/failsafe-reports/
+
+# Coverage
+target/site/jacoco/
